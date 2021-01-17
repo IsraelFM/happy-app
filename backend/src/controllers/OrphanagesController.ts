@@ -62,13 +62,15 @@ export default {
 					path: Yup.string().required(),
 				})
 			),
-		});
+        });
+        
+        const finalData = schema.cast(data);
 
-		await schema.validate(data, {
+		await schema.validate(finalData, {
 			abortEarly: false,
 		});
 
-		const orphanage = orphanagesRepository.create(data);
+		const orphanage = orphanagesRepository.create(finalData);
 
 		await orphanagesRepository.save(orphanage);
 
